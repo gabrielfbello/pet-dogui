@@ -33,8 +33,6 @@ public class AgendamentoServico {
         this.valorUnitario = valorUnitario;
     }
 
-    
-    
     public Long getId() {
         return id;
     }

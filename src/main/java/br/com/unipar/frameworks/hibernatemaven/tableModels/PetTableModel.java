@@ -10,7 +10,7 @@ public class PetTableModel extends DefaultTableModel {
 
     //titulos das colunas
     public PetTableModel() {
-        this.addColumn("Código");
+        this.addColumn("Códigoo");
         this.addColumn("Pet");
         this.addColumn("Tamanho");
         this.addColumn("Dono/Cliente");
@@ -21,17 +21,17 @@ public class PetTableModel extends DefaultTableModel {
         this();
         for (Pet c : listPets) {
             //criando cada linha
+            String clienteName = c.getCliente() != null ? c.getCliente().getNome() : "N/A";
             this.addRow(new String[]{
-                c.getId().toString(), 
-                c.getNome(),
-                c.getTamanho(),
-                c.getCliente().getNome()});
+                    c.getId().toString(),
+                    c.getNome(),
+                    c.getTamanho(),
+                    clienteName});
         }
     }
 
     //retornar o objeto da linha selecionada
-    public Pet getSelectedPet(JTable table, 
-            List<Pet> pets) {
+    public Pet getSelectedPet(JTable table, List<Pet> pets) {
         //pegamos a linha selecionada
         int rowIndex = table.getSelectedRow();
         if (rowIndex < 0) {

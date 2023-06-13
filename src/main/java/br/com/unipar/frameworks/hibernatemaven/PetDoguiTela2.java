@@ -6,8 +6,10 @@ import br.com.unipar.frameworks.model.Agendamento;
 import br.com.unipar.frameworks.model.AgendamentoServico;
 import br.com.unipar.frameworks.model.Cliente;
 import br.com.unipar.frameworks.model.Servico;
+import br.com.unipar.frameworks.model.Pet;
 import br.com.unipar.frameworks.model.dao.AgendamentoDAO;
 import br.com.unipar.frameworks.model.dao.ClienteDAO;
+import br.com.unipar.frameworks.model.dao.PetDAO;
 import br.com.unipar.frameworks.model.dao.ServicoDAO;
 import br.com.unipar.frameworks.model.util.EntityManagerUtil;
 import java.math.BigDecimal;
@@ -19,6 +21,8 @@ import javax.swing.JOptionPane;
 public class PetDoguiTela2 extends javax.swing.JFrame {
 
     private ServicoDAO daoServico;
+
+    private PetDAO daoPet;
     private Agendamento agendamento = new Agendamento();
     
     public PetDoguiTela2() {
@@ -27,6 +31,11 @@ public class PetDoguiTela2 extends javax.swing.JFrame {
         initComponents();
         atualizaLista();
         atualizaServico();
+        atualizaPets();
+    }
+
+    private void criarNovoAgendamento() {
+        this.agendamento = new Agendamento();
     }
     
     private void atualizaServico() {  
@@ -34,6 +43,14 @@ public class PetDoguiTela2 extends javax.swing.JFrame {
         List<Servico> listaServicos = daoServico.findAll();
         for (Servico servico : listaServicos) {
             jComboBoxServicos.addItem(servico.getDescricao());
+        }
+    }
+
+    private void atualizaPets() {
+        daoPet = new PetDAO();
+        List<Pet> listaPets = daoPet.findAll();
+        for (Pet pet : listaPets) {
+            jComboBoxPets.addItem(pet.getNome());
         }
     }
 
@@ -57,6 +74,7 @@ public class PetDoguiTela2 extends javax.swing.JFrame {
 
         jPanelCadastro = new javax.swing.JPanel();
         jLabelPet = new javax.swing.JLabel();
+        jComboBoxPets = new javax.swing.JComboBox<>();
         jTextFieldPet = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -81,9 +99,10 @@ public class PetDoguiTela2 extends javax.swing.JFrame {
         jLabelPet.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         jLabelPet.setText("Animal:");
 
-        jTextFieldPet.addActionListener(new java.awt.event.ActionListener() {
+        jComboBoxPets.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextFieldPetActionPerformed(evt);
+                Pet pet = daoPet.findByNome(jComboBoxPets.getSelectedItem().toString());
+                agendamento.setPet(pet);
             }
         });
 
@@ -243,16 +262,16 @@ public class PetDoguiTela2 extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxServicosActionPerformed
 
     private void jButtonInserirServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonInserirServicoActionPerformed
-        Servico servico = 
+        Servico servico =
                 daoServico.findByDescricao(
                         jComboBoxServicos.getSelectedItem()
                                 .toString());
-        
+
         jTextAreaServicos.setText(jTextAreaServicos.getText().isEmpty() ?
                 (servico.getDescricao()) :
                 (jTextAreaServicos.getText() + ", " + servico.getDescricao()));
-        
-        
+
+
         insereServico(servico);
         atualizaTotal(servico.getValor());
     }//GEN-LAST:event_jButtonInserirServicoActionPerformed
@@ -269,16 +288,16 @@ public class PetDoguiTela2 extends javax.swing.JFrame {
     private void jButtonAgendarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgendarActionPerformed
         String data = jTextFieldData.getText();
         String hora = jTextFieldHora.getText();
-        
+
         try {
             Date date = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").
                     parse(data + " " + hora + ":00");
-            
+
             agendamento.setDatahora(date);
             gravarAgendamento();
         } catch (Exception e) {
             //log
-            JOptionPane.showMessageDialog(null, 
+            JOptionPane.showMessageDialog(null,
                     "A correta formatação da data é dd/MM/yyyy e hora hh:mm"
                             + "\nERRO: " + e);
         }
@@ -324,6 +343,9 @@ public class PetDoguiTela2 extends javax.swing.JFrame {
     private javax.swing.JButton jButtonConsultarPet;
     private javax.swing.JButton jButtonInserirServico;
     private javax.swing.JComboBox<String> jComboBoxServicos;
+
+    private javax.swing.JComboBox<String> jComboBoxPets;
+
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -344,11 +366,9 @@ public class PetDoguiTela2 extends javax.swing.JFrame {
 
     private void atualizaTotal(BigDecimal valor) {
         BigDecimal total = agendamento.getValorTotal();
-        
+
         agendamento.setValorTotal(total.add(valor));
-        jTextFieldValorTotal.setText(
-                agendamento.getValorTotal().toString());
-    
+        jTextFieldValorTotal.setText(agendamento.getValorTotal().toString());
     }
 
     private void insereServico(Servico servico) {
@@ -361,11 +381,9 @@ public class PetDoguiTela2 extends javax.swing.JFrame {
     }
 
     private void gravarAgendamento() {
-        AgendamentoDAO dao = new AgendamentoDAO(); 
+        AgendamentoDAO dao = new AgendamentoDAO();
         dao.save(agendamento);
-        
+        criarNovoAgendamento();
         atualizaLista();
     }
-
-    
 }
