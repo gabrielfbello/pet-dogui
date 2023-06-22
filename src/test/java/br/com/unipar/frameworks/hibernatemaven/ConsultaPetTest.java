@@ -58,7 +58,9 @@ public class ConsultaPetTest {
 //        
 //        //Chamar o método a ser testado
 //        Pet pet = new Pet("Jorge", 10, PetStatus.ATIVO);
-//        String validaNome = Pet.nome();
+//        String validaNome = Pet.nome(); 
+    
+    
 //        
 //        //Verificsar o resultado esperado usando asserções
 //        assertEquals(, validaNome);
