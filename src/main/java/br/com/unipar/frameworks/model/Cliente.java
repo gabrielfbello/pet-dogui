@@ -111,7 +111,6 @@ public class Cliente {
     }
     
     
-<<<<<<< HEAD
     //CHAMAMENTO DO TESTE
 //    public static boolean email(){
 //        
@@ -122,8 +121,5 @@ public class Cliente {
 //        }
 //        
 //    }
-=======
-    
->>>>>>> f6a0eae1d65a163e261fcae209397074447a15fb
     
 }

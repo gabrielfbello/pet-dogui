@@ -87,7 +87,6 @@ public class Pet {
         this.cliente = cliente;
     }
     
-<<<<<<< HEAD
     //CHAMAMENTO DO TESTE
     public static String nome(String nome){
         return nome;
@@ -99,9 +98,4 @@ public class Pet {
 //            throw new PetAtivadoSemNomeException();
 //        }
 //    }
-=======
-    
-    
-    
->>>>>>> f6a0eae1d65a163e261fcae209397074447a15fb
 }

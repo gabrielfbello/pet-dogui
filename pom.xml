@@ -31,7 +31,6 @@
             <artifactId>log4j-core</artifactId>
             <version>2.20.0</version>
         </dependency>
-<<<<<<< HEAD
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -45,8 +44,6 @@
             <scope>test</scope>
             <type>jar</type>
         </dependency>
-=======
->>>>>>> f6a0eae1d65a163e261fcae209397074447a15fb
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
