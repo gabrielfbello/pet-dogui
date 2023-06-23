@@ -115,9 +115,12 @@ public class Agendamento {
        
         return servicos;
     }
+<<<<<<< HEAD
     
     //CHAMAMENTO DO TESTE
     public static int soma(int a, int b){
         return a + b;
     }
+=======
+>>>>>>> f6a0eae1d65a163e261fcae209397074447a15fb
 }
